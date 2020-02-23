@@ -18,10 +18,9 @@
  */
 package eu.dety.burp.joseph.attacks.invalid_curve;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.interfaces.ECPrivateKey;
-
 import org.bouncycastle.jce.interfaces.ECPublicKey;
-
 import org.bouncycastle.jce.spec.ECPublicKeySpec;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,14 +38,18 @@ public class ChineseRemainderTest {
 
     @Before
     public void setUp() throws NoSuchProviderException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeySpecException {
+        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
+            Security.addProvider(new BouncyCastleProvider());
+        }
+
         ECGenParameterSpec ecGenSpec = new ECGenParameterSpec("secp256r1");
-        KeyPairGenerator generator = KeyPairGenerator.getInstance("EC", "BC");
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("EC", Security.getProvider(BouncyCastleProvider.PROVIDER_NAME));
         generator.initialize(ecGenSpec, new SecureRandom());
         KeyPair pair = generator.generateKeyPair();
         BigInteger d = new BigInteger("22040");
         ECPublicKeySpec ecPublicKeySpec = new ECPublicKeySpec(((ECPrivateKey) pair.getPrivate()).getParameters().getG().multiply(d),
                 ((ECPrivateKey) pair.getPrivate()).getParameters());
-        KeyFactory kf = KeyFactory.getInstance("EC", "BC");
+        KeyFactory kf = KeyFactory.getInstance("EC", Security.getProvider(BouncyCastleProvider.PROVIDER_NAME));
         ECPublicKey ecPublicKey = (ECPublicKey) kf.generatePublic(ecPublicKeySpec);
         cr = ChineseRemainder.startInstance(ecPublicKey, ((ECPrivateKey) pair.getPrivate()).getParameters());
     }
