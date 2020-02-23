@@ -477,7 +477,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
         ECGenParameterSpec ecGenSpec = new ECGenParameterSpec(curveSelection.getSelectedItem().toString());
         try {
-            KeyPairGenerator generator = KeyPairGenerator.getInstance("EC", "BC");
+            KeyPairGenerator generator = KeyPairGenerator.getInstance("EC", Security.getProvider(BouncyCastleProvider.PROVIDER_NAME));
             generator.initialize(ecGenSpec, new SecureRandom());
             KeyPair pair = generator.generateKeyPair();
             ChineseRemainder.startInstance(this.getEcPublicKey(), ((ECPrivateKey) pair.getPrivate()).getParameters());

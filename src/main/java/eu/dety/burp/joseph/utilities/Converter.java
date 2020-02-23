@@ -303,7 +303,7 @@ public class Converter {
             String crv = input.get("crv").toString();
             BigInteger x = Base64.decodeInteger(input.get("x").toString().getBytes());
             BigInteger y = Base64.decodeInteger(input.get("y").toString().getBytes());
-            KeyFactory keyFactory = KeyFactory.getInstance("EC", "BC");
+            KeyFactory keyFactory = KeyFactory.getInstance("EC", Security.getProvider(BouncyCastleProvider.PROVIDER_NAME));
             ECParameterSpec ecParameterSpec = ECNamedCurveTable.getParameterSpec(crv);
             ECPoint ecPoint;
 
@@ -355,7 +355,7 @@ public class Converter {
         try {
             pemObject = new PemReader(reader).readPemObject();
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(pemObject.getContent());
-            return KeyFactory.getInstance("EC", "BC").generatePublic(keySpec);
+            return KeyFactory.getInstance("EC", Security.getProvider(BouncyCastleProvider.PROVIDER_NAME)).generatePublic(keySpec);
         } catch (Exception e) {
             loggerInstance.log(Converter.class, "Failed building ECPublicKey from PEM: " + e.getMessage(), Logger.LogLevel.ERROR);
             e.printStackTrace();
