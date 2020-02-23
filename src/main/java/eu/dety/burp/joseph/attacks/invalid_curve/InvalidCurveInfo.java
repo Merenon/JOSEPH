@@ -103,7 +103,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Initializes the InvalidCurveInfo
-     * 
+     *
      * @param callbacks
      *            of the BurpExtender
      */
@@ -123,7 +123,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Prepares the attack and returns the executing instance.
-     * 
+     *
      * @param callbacks
      * @param requestResponse
      *            {@link IHttpRequestResponse} requestResponse message
@@ -375,7 +375,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Get targets public key.
-     * 
+     *
      * @return {@link ECPublicKey} ecPublicKey
      */
     public ECPublicKey getEcPublicKey() {
@@ -384,7 +384,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Get targets public key.
-     * 
+     *
      * @param {@link ECPublicKey} ecPublicKey
      */
     protected void setEcPublicKey(ECPublicKey ecPublicKey) {
@@ -393,7 +393,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Get Point instance from a elliptic curve KeyPair.
-     * 
+     *
      * @param keyPair
      * @return point
      */
@@ -411,7 +411,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Get comma separated value reader.
-     * 
+     *
      * @return csvReader
      */
     public CSVReader getCSVReader() {
@@ -420,7 +420,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Set comma separated value reader.
-     * 
+     *
      * @param reader
      */
     public void setCSVReader(CSVReader reader) {
@@ -429,7 +429,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Generate InvalidCurveAttackRequest from elliptic curve KeyPair.
-     * 
+     *
      * @param keyPair
      */
     private void generateRequest(KeyPair keyPair) {
@@ -466,7 +466,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Generate a elliptic curve KeyPair used in the first request.
-     * 
+     *
      * @return {@link KeyPair} key pair
      */
     public KeyPair generateValidKey() {
@@ -509,7 +509,7 @@ public class InvalidCurveInfo implements IAttackInfo {
     /**
      * Generate the JWE as String array. See: RFC7518 p. 9 BASE64URL(UTF8(JWE Protected Header)) BASE64URL(JWE Encrypted Key) BASE64URL(JWE
      * Initialization Vector) BASE64URL(JWE Ciphertext) BASE64URL(JWE Authentication Tag)
-     * 
+     *
      * @param headerPoint
      *            subgroup generator
      * @param dhPoint
@@ -533,7 +533,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Get the components for the JWE generation using GUI inputs and delegated key inputs.
-     * 
+     *
      * @param headerPoint
      *            subgroup generator
      * @param dhPoint
@@ -546,13 +546,13 @@ public class InvalidCurveInfo implements IAttackInfo {
     protected byte[][] getComponents(Point headerPoint, Point dhPoint, ECPublicKey ecPublicKey) throws NoSuchAlgorithmException {
         String partyUInfo = apuTextArea == null ? "" : apuTextArea.getText();
         String partyVInfo = apvTextArea == null ? "" : apvTextArea.getText();
-        String plainText = plainTextArea.getText();
+        String plainText = plainTextArea == null ? "" : plainTextArea.getText();
         return getComponents(headerPoint, dhPoint, partyUInfo, partyVInfo, plainText, ecPublicKey);
     }
 
     /**
      * Get the components for the JWE generation using delegated key and additional inputs.
-     * 
+     *
      * @param headerPoint
      *            subgroup generator
      * @param dhPoint
@@ -629,7 +629,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Get static Encryption Key of the given size.
-     * 
+     *
      * @param encSize
      * @return emcryptionKey as byte array
      */
@@ -660,7 +660,7 @@ public class InvalidCurveInfo implements IAttackInfo {
 
     /**
      * Get the JWE Header component.
-     * 
+     *
      * @param point
      *            subgroup generator point
      * @param partyUInfo
